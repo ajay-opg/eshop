@@ -1,0 +1,20 @@
+type Product @model {
+  id: ID!
+  name: String
+  category_id: ID!
+  category: Category @connection(fields: ["category_id"])
+}
+
+type Category @model {
+  id: ID!
+  name: String!
+}
+
+type User @model {
+    id: ID!
+    name: String
+    email:String
+    phone:String
+    password:String
+    createdAt:String
+}

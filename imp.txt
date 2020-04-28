@@ -1,0 +1,57 @@
+## COMMANDS
+create-react-app amplifynotes
+cd amplifynotes
+yarn add aws-amplify aws-amplify-react bootstrap
+amplify configure
+user name:  amplify-admin
+Profile Name:  amplify
+amplify init
+amplify add api
+amplify push
+amplify serve
+amplify mock
+
+## LINKS
+https://medium.com/open-graphql/create-a-multiuser-graphql-crud-l-app-in-10-minutes-with-the-new-aws-amplify-cli-and-in-a-few-73aef3d49545
+https://docs.amplify.aws/cli/graphql-transformer/overview#test-the-api
+https://console.aws.amazon.com/cognito/users
+https://read.acloud.guru/8-steps-to-building-your-own-serverless-graphql-api-using-aws-amplify-42c21770424d
+https://docs.amplify.aws/cli/graphql-transformer/directives#has-many
+
+## GraphQL
+query getCategory {
+  listCategorys {
+    items {
+      id name
+    }
+  }
+}
+
+query getProduct {
+  listProducts {
+    items {
+      id name category {
+        name
+      }
+    }
+  }
+}
+
+mutation CreateCategory {
+    createCategory(input: { name: "womens wear"}) {
+        id
+        name
+    }
+}
+
+mutation CreateProduct {
+    createProduct(input: { name: "redmi note 7 pro", category_id: "c50e23b4-119a-42e6-a0a7-483c10b72b18"}) {
+        id
+        name
+    category_id
+        category {
+          id
+            name
+        }
+    }
+}
