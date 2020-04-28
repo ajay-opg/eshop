@@ -1,21 +1,39 @@
 import React, { Component } from 'react';
-import { Route, Link, BrowserRouter, Switch } from 'react-router-dom'
+import { Route, Link, Redirect } from 'react-router-dom';
 
 class Navbar extends Component {
 constructor(props){
     super(props);
     this.state={
-      isLoggedIn:true,
-      username:"Ajay"
+      isLoggedIn:false,
+      username:""
     };
   }
 
+  componentWillMount(){
+        localStorage.getItem('isLoggedIn') && this.setState({
+            isLoggedIn: localStorage.getItem('isLoggedIn')
+        });
+        localStorage.getItem('username') && this.setState({
+            username: localStorage.getItem('username')
+        });
+    }
+
   logout(){
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("username");
+
     this.setState({isLoggedIn:false});
     this.setState({username:""});
+
+
+    // return <Redirect to="/login" />;
   }
 
   render() {
+    if(!this.state.isLoggedIn) {
+   return <Redirect to="/login" />
+    }
     return (
       <div>
           <nav className="navbar navbar-expand-lg navbar-light bg-light">

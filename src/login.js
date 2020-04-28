@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Amplify, {API,graphqlOperation} from 'aws-amplify';
+import { Redirect } from 'react-router-dom';
+
 
 const createUser = `mutation createUser($email: String!,$name: String!,$phone: String!,$password: String!){
   createUser(input:{
@@ -102,6 +104,9 @@ class Login extends Component {
   logout(){
     this.setState({isLoggedIn:false});
     this.setState({username:""});
+
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("username");
   }
 
   async handleLoginSubmit(event) {
@@ -111,6 +116,8 @@ class Login extends Component {
     const user = await API.graphql(graphqlOperation(getLogin, note));
     if(user.data.listUsers.items.length>0)
     {
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('username', user.data.listUsers.items[0].name);
       this.setState({isLoggedIn:true});
       this.setState({username:user.data.listUsers.items[0].name});
     }
@@ -123,6 +130,7 @@ class Login extends Component {
 
     this.setState({lemail:""});
     this.setState({lpassword:""});
+    // alert(localStorage.getItem('isLoggedIn'));
   }
 
   async handleRegisterSubmit(event) {
@@ -153,7 +161,19 @@ class Login extends Component {
     this.setState({password:""});
   }
 
+  componentDidMount(){
+        localStorage.getItem('isLoggedIn') && this.setState({
+            isLoggedIn: localStorage.getItem('isLoggedIn')
+        });
+        localStorage.getItem('username') && this.setState({
+            username: localStorage.getItem('username')
+        });
+    }
+
   render() {
+    if(this.state.isLoggedIn) {
+    return <Redirect to="/" />
+    }
     return (
       <div className="App">
       {!this.state.isLoggedIn ?

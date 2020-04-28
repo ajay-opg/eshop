@@ -44,22 +44,17 @@ class ProductDetails extends Component {
     const data = [].concat(this.state.notes)
       .map((item,i)=> 
       <tr>
-        <td>{i+1}</td>
         <td>{item.category.name}</td>
         <td>{item.name}</td>
       </tr>
       )
     return (
-      <div className="col">
+      <div>
         <Navbar />
         <div className="col-md-12">
-          <div className="col-md-12 text-right">
-            <button className="btn btn-primary">Add Product</button>
-          </div>
           <table className="table table-bordered table-sm table-hover">
           <thead>
           <tr>
-          <th>Sr</th>
           <th>Category</th>
           <th>Product</th>
           </tr>

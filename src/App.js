@@ -8,7 +8,6 @@ import aws_exports from './aws-exports'; // specify the location of aws-exports.
 
 Amplify.configure(aws_exports);
 
-
 class App extends Component {
 constructor(props){
     super(props);
@@ -18,10 +17,18 @@ constructor(props){
     };
   }
 
-  set_loggedin(){
-    this.setState({isLoggedIn:true});
-    this.setState({username:"Ajay"});
-  }
+  componentDidMount(){
+        localStorage.getItem('isLoggedIn') && this.setState({
+            isLoggedIn: localStorage.getItem('isLoggedIn')
+        });
+        localStorage.getItem('username') && this.setState({
+            username: localStorage.getItem('username')
+        });
+    }
+  // set_loggedin(){
+  //   this.setState({isLoggedIn:true});
+  //   this.setState({username:"Ajay"});
+  // }
 
   logout(){
     this.setState({isLoggedIn:false});
@@ -82,8 +89,7 @@ constructor(props){
       }	
             </div>
             <h1>Home Page</h1>
-            <button className="btn btn-primary" onClick={this.set_loggedin.bind(this)}>Temp Logged In</button>
-			</div>
+            </div>
 			);
 		}
 	}
